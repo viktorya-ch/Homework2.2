@@ -8,7 +8,6 @@ public class Product {
     public Product(String title, int price) {
         this.title = title;
         this.price = price;
-
     }
 
     public String getTitle() {
