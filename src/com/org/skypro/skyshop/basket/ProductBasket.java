@@ -11,7 +11,8 @@ public class ProductBasket {
         products = Arrays.copyOf(products, products.length + 1);
         products[products.length - 1] = product;
     }
-    public int gettingTheTotalCost(){
+
+    public int gettingTheTotalCost() {
         int sum = 0;
         for (int i = 0; i < products.length; i++)
             sum += products[i].getPrice();
@@ -20,12 +21,13 @@ public class ProductBasket {
     }
 
 
-    public void printInTheConsole(){
+    public void printInTheConsole() {
 
-        for (int i = 0; i < products.length; i++){
-            System.out.println(products[i].getTitle() + " : " + products[i].getPrice());}
+        for (int i = 0; i < products.length; i++) {
+            System.out.println(products[i].getTitle() + " : " + products[i].getPrice());
+        }
 
-        System.out.println( " Итого "  + gettingTheTotalCost());
+        System.out.println(" Итого " + gettingTheTotalCost());
 
     }
 

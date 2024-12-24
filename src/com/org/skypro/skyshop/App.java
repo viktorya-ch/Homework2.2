@@ -20,9 +20,6 @@ public class App {
     }
 
 
-
-
-
     public static void printInTheConsole() {
 
         for (int i = 0; i < product.length; i++) {
