@@ -24,7 +24,6 @@ public class App {
             System.out.println(product[i].getTitle() + " : " + product[i].getPrice());
         }
 
-
     }
 }
 

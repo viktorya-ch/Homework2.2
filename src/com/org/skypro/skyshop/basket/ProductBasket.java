@@ -29,7 +29,6 @@ public class ProductBasket {
         System.out.println(" Итого " + gettingTheTotalCost());
 
     }
-
     public boolean hasProductInBasket(String title) {
         for (Product product : products) {
             if (product != null && product.getTitle().equals(title)) {
