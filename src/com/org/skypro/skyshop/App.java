@@ -18,8 +18,6 @@ public class App {
         printInTheConsole();
 
     }
-
-
     public static void printInTheConsole() {
 
         for (int i = 0; i < product.length; i++) {
