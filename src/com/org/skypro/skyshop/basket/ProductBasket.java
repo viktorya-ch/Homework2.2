@@ -1,49 +1,55 @@
 package com.org.skypro.skyshop.basket;
+
 import com.org.skypro.skyshop.product.Product;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class ProductBasket {
-    private Product[] products;
 
-    public void addProductToBasket(Product product) {
-        products = Arrays.copyOf(products, products.length + 1);
-        products[products.length - 1] = product;
+    private final Map<String, Integer> products;
+
+    public ProductBasket() {
+        this.products = new HashMap<>();
     }
 
-    public int gettingTheTotalCost() {
-        int sum = 0;
-        for (int i = 0; i < products.length; i++)
-            sum += products[i].getPrice();
-        return sum;
-
+    public void addProduct(String productTitle, int productPrice) {
+        products.put(productTitle, productPrice);
     }
 
-
-    public void printInTheConsole() {
-
-        for (int i = 0; i < products.length; i++) {
-            System.out.println(products[i].getTitle() + " : " + products[i].getPrice());
+    public int getTotalCost() {
+        int totalCost = 0;
+        for (int price : products.values()) {
+            totalCost += price;
         }
+        return totalCost;
+    }
 
-        System.out.println(" Итого " + gettingTheTotalCost());
+    public void printBasketContents() {
+        StringBuilder s = new StringBuilder();
+        for (Map.Entry<String, Integer> entry : products.entrySet()) {
+            s.append(entry.getKey()).append(":").append(entry.getValue()).append("");
+        }
+        s.append("Итого:").append(getTotalCost());
+        System.out.println(s.toString());
 
     }
-    public boolean hasProductInBasket(String title) {
+
+    public boolean containsProduct(String productTitle) {
         for (Product product : products) {
-            if (product != null && product.getTitle().equals(title)) {
+            if (product != null && product.getTitle().equals(productTitle)) {
                 return true;
             }
-
         }
+
+
         return false;
     }
 
     public void clearBasket() {
-        for (int i = 0; i < products.length; i++) {
-            products[i] = null;
-        }
+        products.clear();
     }
+
+
 }
 
 
