@@ -2,17 +2,21 @@ package com.org.skypro.skyshop;
 
 import com.org.skypro.skyshop.basket.ProductBasket;
 import com.org.skypro.skyshop.product.Product;
+import com.org.skypro.skyshop.product.SimpleProduct;
+import com.org.skypro.skyshop.product.DiscountedProduct;
+import com.org.skypro.skyshop.product.FixPriceProduct;
+
 
 public class App {
     public static void main(String[] args) {
 
         ProductBasket basket = new ProductBasket();
-        Product kettle = new Product(" Чайник ", 599);
-        Product dryer = new Product(" Фен ", 659);
-        Product table = new Product( " Стол ", 1120);
-        Product notepad = new Product(" Блокнот", 90);
+        DiscountedProduct kettle = new DiscountedProduct(" Чайник ", 599,20);
+        DiscountedProduct dryer = new DiscountedProduct(" Фен ", 659,11);
+        SimpleProduct table = new SimpleProduct( " Стол ", 1120);
+        FixPriceProduct notepad = new FixPriceProduct(" Блокнот", 90);
 
-        Product chair = new Product( " Стул ", 494);
+        SimpleProduct chair = new SimpleProduct( " Стул ", 494);
 
 
         //Добавление продукта в корзину
@@ -28,6 +32,7 @@ public class App {
         //Печать содержимого корзины
         System.out.println("Содержимое корзины: ");
         basket.printBasketContents();
+
 
 
         //Получение стоимости корзины
