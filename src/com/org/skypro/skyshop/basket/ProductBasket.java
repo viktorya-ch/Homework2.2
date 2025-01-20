@@ -1,10 +1,17 @@
 package com.org.skypro.skyshop.basket;
 
+import com.org.skypro.skyshop.product.DiscountedProduct;
 import com.org.skypro.skyshop.product.Product;
 
 import java.util.*;
 
 public class ProductBasket {
+    private List<Product> basket;
+
+    public void Basket() {
+        basket = new ArrayList<>();
+    }
+
     private Product[] products;
     private int count;
     private static final int MAX_SIZE = 4;
@@ -40,6 +47,7 @@ public class ProductBasket {
         }
         for (int i = 0; i < count; i++) {
             System.out.println(products[i].getTitle() + " : " + products[i].getPrice());
+
         }
         System.out.println(" Итого: " + getTotalCost());
 
@@ -61,6 +69,18 @@ public class ProductBasket {
         count = 0;
         System.out.println(" Корзина очищена ");
     }
+
+
+    public int isSpecialProducts() {
+        int specialCount = 0;
+        for (Product product : basket) {
+            if (product.isSpecial()) {
+                specialCount++;
+            }
+        }
+        return specialCount;
+    }
+
 }
 
 
