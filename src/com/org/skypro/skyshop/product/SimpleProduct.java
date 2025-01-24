@@ -14,10 +14,6 @@ public class SimpleProduct extends Product {
         return price;
     }
 
-//    public void setPrice(double price) {
-//        this.price = price;
-//    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -39,7 +35,7 @@ public class SimpleProduct extends Product {
         return " " + title + " : " + price + " ";
     }
 
-    public boolean isSpecial(){
+    public boolean isSpecial() {
         return false;
     }
 

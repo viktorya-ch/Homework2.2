@@ -1,6 +1,5 @@
 package com.org.skypro.skyshop.basket;
 
-import com.org.skypro.skyshop.product.DiscountedProduct;
 import com.org.skypro.skyshop.product.Product;
 
 import java.util.*;
@@ -16,7 +15,6 @@ public class ProductBasket {
     private int count;
     private static final int MAX_SIZE = 4;
 
-//    private final Map<String, Integer> products;
 
     public ProductBasket() {
         products = new Product[MAX_SIZE];
@@ -82,6 +80,7 @@ public class ProductBasket {
     }
 
 }
+
 
 
 
