@@ -6,6 +6,7 @@ import com.org.skypro.skyshop.product.Product;
 import com.org.skypro.skyshop.product.SimpleProduct;
 import com.org.skypro.skyshop.product.DiscountedProduct;
 import com.org.skypro.skyshop.product.FixPriceProduct;
+import com.org.skypro.skyshop.searchengine.SearchEngine;
 
 
 public class App {
