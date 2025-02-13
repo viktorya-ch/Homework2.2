@@ -37,4 +37,37 @@ public class SearchEngine {
         return results;
     }
 
+    public Searchable findSuitableObject (String searchTerm){
+        Searchable[] object = new Searchable[4];
+        Searchable suitableObject = null;
+        int maxFind = 0;
+        int score;
+        for (Searchable searchable : elements) {
+            String str = searchable.getSearchTerm().toLowerCase();
+            String subStr = searchTerm.toLowerCase();
+            score = countOccurrences (str, subStr);
+            if (score > maxFind) {
+                maxFind = score;
+                suitableObject = searchable;
+            }
+        }return suitableObject;
+    }
+    public  int countOccurrences ( String str, String substr) {
+        int count = 0;
+        for (int index = 0; (index = str.indexOf(substr, index)) != -1; index += substr.length()){
+            count++;
+        }
+        return count;
+    }
+
+    public class BestResultNotFound extends
+            Exception {
+        public BestResultNotFound(String message) {
+        super(message);
+        }
+    }
+
+
+
+
 }
