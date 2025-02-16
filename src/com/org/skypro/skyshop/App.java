@@ -7,6 +7,7 @@ import com.org.skypro.skyshop.product.SimpleProduct;
 import com.org.skypro.skyshop.product.DiscountedProduct;
 import com.org.skypro.skyshop.product.FixPriceProduct;
 import com.org.skypro.skyshop.searchable.Searchable;
+import com.org.skypro.skyshop.searchengine.BestResultNotFound;
 import com.org.skypro.skyshop.searchengine.SearchEngine;
 
 import java.util.Arrays;
@@ -38,6 +39,8 @@ public class App {
             DiscountedProduct mirror = new DiscountedProduct(" Зеркало ", 122, 101);
         } catch (IllegalArgumentException m) {
             System.out.println(m.getMessage());
+        } catch (BestResultNotFound p) {
+            System.out.println(" BestResultNotFound " + p.getMessage());
         }
 
 
@@ -119,20 +122,7 @@ public class App {
             }
 
         };
-        SearchEngine searchEngine = new SearchEngine(Arrays.asList(variant1, variant2));
-        try {
-            Searchable suitableObject = searchEngine.findSuitableObject(" Чайник ");
-            System.out.println(" Suitable object found: " + suitableObject.getSearchTerm());
-        } catch (SearchEngine.BestResultNotFound x) {
-            System.out.println(x.getMessage());
-        }
 
-        try {
-            Searchable suitableObject = searchEngine.findSuitableObject(" Книга ");
-            System.out.println(" Suitable object found: " + suitableObject.getSearchTerm());
-        } catch (SearchEngine.BestResultNotFound x) {
-            System.out.println(x.getMessage());
-        }
     }
 }
 
