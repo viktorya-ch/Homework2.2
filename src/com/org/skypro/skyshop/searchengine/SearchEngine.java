@@ -6,27 +6,33 @@ public class SearchEngine {
     private Searchable[] elements;
     private int count;
 
+    public SearchEngine(String name) {
+        if (name == null || name.equals(" ")) {
+            throw new BestResultNotFound();
+        }
+    }
 
-    public SearchEngine (int size) {
+
+    public SearchEngine(int size) {
         this.elements = new Searchable[size];
         this.count = 0;
     }
 
-    public void add ( Searchable type) {
-        if (count < elements.length){
+    public void add(Searchable type) {
+        if (count < elements.length) {
             elements[count] = type;
             count++;
-        }else {
+        } else {
             System.out.println(" Массив полный. Невозможно добавить новый элемент. ");
         }
     }
 
-    public Searchable[] search ( String searchTerm) {
+    public Searchable[] search(String searchTerm) {
         Searchable[] results = new Searchable[5];
         int resultCount = 0;
 
-        for (int i = 0; i < count; i++){
-            if (elements[i] != null){
+        for (int i = 0; i < count; i++) {
+            if (elements[i] != null) {
                 results[resultCount] = elements[i];
                 resultCount++;
             }
@@ -37,7 +43,7 @@ public class SearchEngine {
         return results;
     }
 
-    public Searchable findSuitableObject (String searchTerm){
+    public Searchable findSuitableObject(String searchTerm) {
         Searchable[] object = new Searchable[4];
         Searchable suitableObject = null;
         int maxFind = 0;
@@ -45,29 +51,22 @@ public class SearchEngine {
         for (Searchable searchable : elements) {
             String str = searchable.getSearchTerm().toLowerCase();
             String subStr = searchTerm.toLowerCase();
-            score = countOccurrences (str, subStr);
+            score = countOccurrences(str, subStr);
             if (score > maxFind) {
                 maxFind = score;
                 suitableObject = searchable;
             }
-        }return suitableObject;
+        }
+        return suitableObject;
     }
-    public  int countOccurrences ( String str, String substr) {
+
+    public int countOccurrences(String str, String substr) {
         int count = 0;
-        for (int index = 0; (index = str.indexOf(substr, index)) != -1; index += substr.length()){
+        for (int index = 0; (index = str.indexOf(substr, index)) != -1; index += substr.length()) {
             count++;
         }
         return count;
     }
-
-    public class BestResultNotFound extends
-            Exception {
-        public BestResultNotFound(String message) {
-        super(message);
-        }
-    }
-
-
 
 
 }
