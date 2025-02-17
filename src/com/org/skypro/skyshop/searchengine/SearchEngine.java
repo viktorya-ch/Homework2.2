@@ -2,16 +2,11 @@ package com.org.skypro.skyshop.searchengine;
 
 import com.org.skypro.skyshop.searchable.Searchable;
 
+import java.util.Arrays;
+
 public class SearchEngine {
-    private Searchable[] elements;
+    public Searchable[] elements;
     private int count;
-
-    public SearchEngine(String name) {
-        if (name == null || name.equals(" ")) {
-            throw new BestResultNotFound();
-        }
-    }
-
 
     public SearchEngine(int size) {
         this.elements = new Searchable[size];

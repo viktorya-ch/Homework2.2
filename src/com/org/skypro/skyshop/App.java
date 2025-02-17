@@ -14,6 +14,12 @@ import java.util.Arrays;
 
 
 public class App {
+
+    public static void showMessage(String title) throws BestResultNotFound {
+        if (title == null) {
+            throw new BestResultNotFound(" Для этого запроса не нашлось подходящей статьи ");
+        }
+    }
     public static void main(String[] args) {
 
         ProductBasket basket = new ProductBasket();
@@ -39,8 +45,11 @@ public class App {
             DiscountedProduct mirror = new DiscountedProduct(" Зеркало ", 122, 101);
         } catch (IllegalArgumentException m) {
             System.out.println(m.getMessage());
-        } catch (BestResultNotFound p) {
-            System.out.println(" BestResultNotFound " + p.getMessage());
+        }
+        try{
+            SimpleProduct glasses = new SimpleProduct(" Очки ", 580);
+        } catch (BestResultNotFound p){
+           System.out.println(p.getMessage());
         }
 
 
@@ -82,7 +91,7 @@ public class App {
         System.out.println("Чайник есть в пустой корзине" + basket.containsProduct("Чайник"));
 
 
-        //Тестирование изменений
+//        Тестирование изменений
 
         SearchEngine searchEngine = new SearchEngine(15);
 
@@ -123,6 +132,7 @@ public class App {
 
         };
 
-    }
+         }
 }
+
 
