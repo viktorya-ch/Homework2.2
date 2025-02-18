@@ -51,6 +51,9 @@ public class SearchEngine {
                 maxFind = score;
                 suitableObject = searchable;
             }
+            if (suitableObject == null){
+                throw new BestResultNotFound(" Для этого запроса не нашлось подходящей статьи ")
+            }
         }
         return suitableObject;
     }
