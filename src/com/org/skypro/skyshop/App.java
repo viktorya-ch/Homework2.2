@@ -14,12 +14,6 @@ import java.util.Arrays;
 
 
 public class App {
-
-    public static void showMessage(String title) throws BestResultNotFound {
-        if (title == null) {
-            throw new BestResultNotFound(" Для этого запроса не нашлось подходящей статьи ");
-        }
-    }
     public static void main(String[] args) {
 
         ProductBasket basket = new ProductBasket();
@@ -46,12 +40,6 @@ public class App {
         } catch (IllegalArgumentException m) {
             System.out.println(m.getMessage());
         }
-        try{
-            SimpleProduct glasses = new SimpleProduct(" Очки ", 580);
-        } catch (BestResultNotFound p){
-           System.out.println(p.getMessage());
-        }
-
 
         //Добавление продукта в корзину
         basket.addProduct(kettle);
