@@ -38,7 +38,7 @@ public class SearchEngine {
         return results;
     }
 
-    public Searchable findSuitableObject(String searchTerm) {
+    public Searchable findSuitableObject(String searchTerm) throws BestResultNotFound {
         Searchable[] object = new Searchable[4];
         Searchable suitableObject = null;
         int maxFind = 0;
