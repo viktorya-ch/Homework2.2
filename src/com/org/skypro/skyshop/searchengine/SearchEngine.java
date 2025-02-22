@@ -2,9 +2,17 @@ package com.org.skypro.skyshop.searchengine;
 
 import com.org.skypro.skyshop.searchable.Searchable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class SearchEngine {
+    private List<Searchable> searchables;
+
+    public SearchEngine() {
+        searchables = new ArrayList<>();
+    }
+
     public Searchable[] elements;
     private int count;
 
@@ -38,32 +46,33 @@ public class SearchEngine {
         return results;
     }
 
-    public Searchable findSuitableObject(String searchTerm) throws BestResultNotFound {
-        Searchable[] object = new Searchable[4];
-        Searchable suitableObject = null;
-        int maxFind = 0;
-        int score;
-        for (Searchable searchable : elements) {
-            String str = searchable.getSearchTerm().toLowerCase();
-            String subStr = searchTerm.toLowerCase();
-            score = countOccurrences(str, subStr);
-            if (score > maxFind) {
-                maxFind = score;
-                suitableObject = searchable;
-            }
-            if (suitableObject == null){
-                throw new BestResultNotFound(" Для этого запроса не нашлось подходящей статьи ")
-            }
-        }
-        return suitableObject;
-    }
 
-    public int countOccurrences(String str, String substr) {
+    public int countOccurrences(String str, String substring) {
         int count = 0;
-        for (int index = 0; (index = str.indexOf(substr, index)) != -1; index += substr.length()) {
+        int index = 0;
+        while ((index = str.indexOf(substring, index)) != -1) {
+
             count++;
+            index += substring.length();
         }
         return count;
+    }
+
+    public Searchable findSuitableObject(String search) throws BestResultNotFound {
+        int maxCount = -1;
+        Searchable suitableObject = null;
+        for (Searchable searchable : elements) {
+            String term = searchable.getSearchTerm();
+            int count = countOccurrences(term, search);
+            if (count > maxCount) {
+                maxCount = count;
+                suitableObject = searchable;
+            }
+        }
+        if (suitableObject == null) {
+            throw new BestResultNotFound(" Объект не найден для запроса: " + search);
+        }
+        return suitableObject;
     }
 
 
