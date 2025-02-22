@@ -81,14 +81,24 @@ public class App {
 
 //        Тестирование изменений
 
-        SearchEngine searchEngine = new SearchEngine(15);
+        SearchEngine searchEngine = new SearchEngine(5);
 
-        searchEngine.add(new Product("Фен"));
-        searchEngine.add(new Product("Стол"));
-        searchEngine.add(new Product("Кровать"));
-        searchEngine.add(new Product("Монитор"));
-        searchEngine.add(new Product("Чайник"));
-        searchEngine.add(new Product("Дверь"));
+        searchEngine.add(new Searchable() {
+            @Override
+            public String getSearchTerm() {
+                return "";
+            }
+
+            @Override
+            public String getContentType() {
+                return "";
+            }
+
+            @Override
+            public String getName() {
+                return "";
+            }
+        });
 
 
         searchEngine.add(new Article(" Стол из коллекции Fargo ", " Модель правильной круглой формы легко раскладывается вручную."));
@@ -105,22 +115,25 @@ public class App {
         System.out.println(searchEngine.search("Монитор"));
         System.out.println(searchEngine.search("Стол"));
 
+        String searchString1 = " Стол ";
+        try {
+            Searchable bestSearchable1 = searchEngine.findSuitableObject(searchString1);
+            System.out.println(" Луший результат: " + bestSearchable1.getSearchTerm());
+        } catch (BestResultNotFound b) {
+            System.out.println(" Ошибка: " + b.getMessage());
+        }
 
-        Searchable variant1 = new Searchable() {
-            @Override
-            public String getSearchTerm() {
-                return " Чайник ";
-            }
-        };
-        Searchable variant2 = new Searchable() {
-            @Override
-            public String getSearchTerm() {
-                return " Свеча ";
-            }
 
-        };
+        String searchString2 = " Шнур ";
+        try {
+            Searchable bestSearchable2 = searchEngine.findSuitableObject(searchString2);
+            System.out.println(" Лучший результат: " + bestSearchable2.getSearchTerm());
+        } catch (BestResultNotFound i) {
+            System.out.println(" Ошибка: " + i.getMessage());
+        }
 
-         }
+
+    }
 }
 
 
