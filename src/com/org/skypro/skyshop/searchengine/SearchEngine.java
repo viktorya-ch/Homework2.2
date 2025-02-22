@@ -51,7 +51,6 @@ public class SearchEngine {
         int index = 0;
         while ((index=str.indexOf(substring,index))!= -1){
 
-      //  for (int index = 0; (index = str.indexOf(substr, index)) != -1; index += substr.length()) {
             count++;
             index += substring.length();
         }
