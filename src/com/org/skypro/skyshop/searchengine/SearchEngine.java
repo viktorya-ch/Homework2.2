@@ -7,9 +7,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SearchEngine {
-    private List<Searchable>searchables;
-    public SearchEngine(){
-     searchables =new ArrayList<>();
+    private List<Searchable> searchables;
+
+    public SearchEngine() {
+        searchables = new ArrayList<>();
     }
 
     public Searchable[] elements;
@@ -49,31 +50,30 @@ public class SearchEngine {
     public int countOccurrences(String str, String substring) {
         int count = 0;
         int index = 0;
-        while ((index=str.indexOf(substring,index))!= -1){
+        while ((index = str.indexOf(substring, index)) != -1) {
 
             count++;
             index += substring.length();
         }
         return count;
     }
-    public Searchable  findSuitableObject (String search) throws BestResultNotFound {
+
+    public Searchable findSuitableObject(String search) throws BestResultNotFound {
         int maxCount = -1;
         Searchable suitableObject = null;
-        for (Searchable searchable : elements){
-            String term=searchable.getSearchTerm();
+        for (Searchable searchable : elements) {
+            String term = searchable.getSearchTerm();
             int count = countOccurrences(term, search);
-            if (count>maxCount){
-                maxCount=count;
-                suitableObject=searchable;
+            if (count > maxCount) {
+                maxCount = count;
+                suitableObject = searchable;
             }
         }
-        if (suitableObject == null){
+        if (suitableObject == null) {
             throw new BestResultNotFound(" Объект не найден для запроса: " + search);
         }
         return suitableObject;
     }
-
-
 
 
 }
