@@ -2,76 +2,102 @@ package com.org.skypro.skyshop.basket;
 
 import com.org.skypro.skyshop.product.Product;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class ProductBasket {
-    private List<Product> basket;
-
-    public void Basket() {
-        basket = new ArrayList<>();
-    }
-
-    private Product[] products;
-    private int count;
-    private static final int MAX_SIZE = 4;
-
+    private ArrayList<Product> products;
 
     public ProductBasket() {
-        products = new Product[MAX_SIZE];
-        count = 0;
+        products = new ArrayList<>();
     }
 
     public void addProduct(Product product) {
-        if (count < MAX_SIZE) {
-            products[count] = product;
-            count++;
-            System.out.println(" Продукт " + product.getTitle() + " добавлен в корзину. ");
-        } else {
-            System.out.println(" Корзина заполнена, удалите продукты, чтобы добавить новые. ");
-        }
+        products.add(product);
     }
 
-    public int getTotalCost() {
-        int totalCost = 0;
-        for (int i = 0; i < count; i++) {
-            totalCost += products[i].getPrice();
-        }
-        return totalCost;
+    public void removeProduct(Product product) {
+        products.remove(product);
     }
 
-    public void printBasketContents() {
-        if (count == 0) {
-            System.out.println(" Корзина пуста. ");
-        }
-        for (int i = 0; i < count; i++) {
-            System.out.println(products[i].getTitle() + " : " + products[i].getPrice());
+    public List<Product> removeProductsByTitle(String title) {
+        List<Product> removedProduct = new ArrayList<>();
+        Iterator<Product> iterator = products.iterator();
 
-        }
-        System.out.println(" Итого: " + getTotalCost());
-
-    }
-
-    public boolean containsProduct(String productTitle) {
-        for (int i = 0; i < count; i++) {
-            if (products[i].getTitle().equalsIgnoreCase(productTitle)) {
-                return true;
+        while (iterator.hasNext()) {
+            Product product = iterator.next();
+            if (product.getTitle().equals(title)) {
+                removedProduct.add(product);
+                iterator.remove();
             }
         }
-        return false;
+        return removedProduct;
     }
 
-    public void clearBasket() {
-        for (int i = 0; i < count; i++) {
-            products[i] = null;
+    public void printBasket() {
+        for (Product product : products) {
+            System.out.println(product);
         }
-        count = 0;
-        System.out.println(" Корзина очищена ");
     }
+
+    public int getCount() {
+        return products.size();
+    }
+
+
+//    private Product[] products;
+    // private int count;
+//    private static final int MAX_SIZE = 4;
+
+//
+//    public ProductBasket() {
+//        products = new Product[MAX_SIZE];
+//        count = 0;
+//    }
+
+
+//    public int getTotalCost() {
+//        int totalCost = 0;
+//        for (int i = 0; i < count; i++) {
+//            totalCost += basket.getPrice();
+//        }
+//        return totalCost;
+//    }
+
+//    public void printBasketContents() {
+//        if (count == 0) {
+//            System.out.println(" Корзина пуста. ");
+//        }
+//        for (int i = 0; i < count; i++) {
+//            System.out.println(basket.getTitle() + " : " + basket.getPrice());
+//
+//        }
+//        System.out.println(" Итого: " + getTotalCost());
+//
+//    }
+//
+//    public boolean containsProduct(String productTitle) {
+//        for (int i = 0; i < count; i++) {
+//            if (basket.getTitle().equalsIgnoreCase(productTitle)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+
+//    public void clearBasket() {
+//        for (int i = 0; i < count; i++) {
+//            products = null;
+//        }
+//        count = 0;
+//        System.out.println(" Корзина очищена ");
+//    }
 
 
     public int isSpecialProducts() {
         int specialCount = 0;
-        for (Product product : basket) {
+        for (Product product : products) {
             if (product.isSpecial()) {
                 specialCount++;
             }

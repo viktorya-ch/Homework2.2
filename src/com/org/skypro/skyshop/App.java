@@ -11,6 +11,7 @@ import com.org.skypro.skyshop.searchengine.BestResultNotFound;
 import com.org.skypro.skyshop.searchengine.SearchEngine;
 
 import java.util.Arrays;
+import java.util.List;
 
 
 public class App {
@@ -41,99 +42,133 @@ public class App {
             System.out.println(m.getMessage());
         }
 
-        //Добавление продукта в корзину
+        //Добавить продукт в корзину
         basket.addProduct(kettle);
         basket.addProduct(dryer);
         basket.addProduct(table);
         basket.addProduct(notepad);
 
-        //Добавление продукта в заполненную корзину
-        basket.addProduct(chair);
+        //Удалить существующий продукт из корзины
+
+        List<Product> removedProducts = basket.removeProductsByTitle(" Чайник ");
+
+        //Вывести удаленный продукт на экран
+
+        System.out.println("  Удаленный продукт: ");
+        for (Product product : removedProducts) {
+            System.out.println(product);
+        }
+
+        //Вывести содержимое корзины с помощью метода printBasket
+
+        System.out.println(" Содержимое корзины : ");
+        basket.printBasket();
+
+        //Удалить не существующий продукт
+        List<Product> removedFree = basket.removeProductsByTitle(" Телевизор ");
 
 
-        //Печать содержимого корзины
-        System.out.println("Содержимое корзины: ");
-        basket.printBasketContents();
+        //Проверить, что список удаленных продуктов пуст
 
 
-        //Получение стоимости корзины
-        System.out.println("Общая стоимость корзины" + basket.getTotalCost());
+        if (removedFree.isEmpty()) {
+            System.out.println(" Список пуст ");
+        }
 
 
-        //Поиск товара
-        System.out.println("Чайник есть в корзине" + basket.containsProduct("Чайник"));
-        System.out.println("Фен есть в корзине" + basket.containsProduct("Фен"));
+        //Вывести содержимое корзины на экран
+
+        System.out.println(" Содержимое корзины: ");
+        basket.printBasket();
 
 
-        //Очистка корзины
-        basket.clearBasket();
+        //Тестирование изменений
 
-        //Печать содержимого пустой корзины
-        System.out.println("Содержимое пустой корзины");
-        basket.printBasketContents();
+        SearchEngine searchEngine = new SearchEngine();
 
-        //Получение стоимости пустой корзины
-        System.out.println("Общая стоимость пустой корзины" + basket.getTotalCost());
-
-        //Поиск товара в пустой корзине
-        System.out.println("Чайник есть в пустой корзине" + basket.containsProduct("Чайник"));
-
-
-//        Тестирование изменений
-
-        SearchEngine searchEngine = new SearchEngine(5);
-
-        searchEngine.add(new Searchable() {
+        Searchable searchable1 = new Searchable() {
             @Override
             public String getSearchTerm() {
-                return "";
+                return " Кровать односпальная подростковая ";
             }
 
             @Override
             public String getContentType() {
-                return "";
+                return " Ортопедическое основание кровати ";
             }
 
             @Override
             public String getName() {
-                return "";
+                return " Кровать ";
             }
-        });
+        };
+        Searchable searchable2 = new Searchable() {
+            @Override
+            public String getSearchTerm() {
+                return " Монитор обладает разрешением 1920*108 ";
+            }
+
+            @Override
+            public String getContentType() {
+                return " Монитор Xiaomi Display G24 ";
+            }
+
+            @Override
+            public String getName() {
+                return " Монитор ";
+            }
+        };
+        searchEngine.addSearchable(searchable1);
+        searchEngine.addSearchable(searchable2);
 
 
-        searchEngine.add(new Article(" Стол из коллекции Fargo ", " Модель правильной круглой формы легко раскладывается вручную."));
-        searchEngine.add(new Article(" Монитор Xiaomi Display G24 ", " Обладает разрешением 1920*1080 пикселей. "));
-        searchEngine.add(new Article(" Кровать односпальная подростковая", " Ортопедическое основание обеспечивает правильное положение тела "));
-        searchEngine.add(new Article(" Умный электрический чайник СТ-0039 ", " Чайник оснащен панелью управления "));
-        searchEngine.add(new Article(" Фен для волос ", " Профессиональный стайлер с насадками "));
+        String searchString = " Кровать ";
+        List<Searchable> results = searchEngine.findAllObjects(searchString);
 
-
-        System.out.println(searchEngine.search("Чайник"));
-        System.out.println(searchEngine.search("Дверь"));
-        System.out.println(searchEngine.search("Кровать"));
-        System.out.println(searchEngine.search("Фен"));
-        System.out.println(searchEngine.search("Монитор"));
-        System.out.println(searchEngine.search("Стол"));
-
-        String searchString1 = " Стол ";
-        try {
-            Searchable bestSearchable1 = searchEngine.findSuitableObject(searchString1);
-            System.out.println(" Луший результат: " + bestSearchable1.getSearchTerm());
-        } catch (BestResultNotFound b) {
-            System.out.println(" Ошибка: " + b.getMessage());
+        if (!results.isEmpty()) {
+            System.out.println(" Результаты поиска " + searchString);
+            for (Searchable result : results) {
+                System.out.println(result.getSearchTerm());
+            }
+        } else {
+            System.out.println(" Нет совпадений для поисковой строки : " + searchString);
         }
-
-
-        String searchString2 = " Шнур ";
-        try {
-            Searchable bestSearchable2 = searchEngine.findSuitableObject(searchString2);
-            System.out.println(" Лучший результат: " + bestSearchable2.getSearchTerm());
-        } catch (BestResultNotFound i) {
-            System.out.println(" Ошибка: " + i.getMessage());
-        }
-
-
     }
 }
+
+
+//        searchEngine.add(new Article(" Стол из коллекции Fargo ", " Модель правильной круглой формы легко раскладывается вручную."));
+//        searchEngine.add(new Article(" Монитор Xiaomi Display G24 ", " Обладает разрешением 1920*1080 пикселей. "));
+//        searchEngine.add(new Article(" Кровать односпальная подростковая", " Ортопедическое основание обеспечивает правильное положение тела "));
+//        searchEngine.add(new Article(" Умный электрический чайник СТ-0039 ", " Чайник оснащен панелью управления "));
+//        searchEngine.add(new Article(" Фен для волос ", " Профессиональный стайлер с насадками "));
+
+//
+//        System.out.println(searchEngine.search("Чайник"));
+//        System.out.println(searchEngine.search("Дверь"));
+//        System.out.println(searchEngine.search("Кровать"));
+//        System.out.println(searchEngine.search("Фен"));
+//        System.out.println(searchEngine.search("Монитор"));
+//        System.out.println(searchEngine.search("Стол"));
+//
+//        String searchString1 = " Стол ";
+//        try {
+//            Searchable bestSearchable1 = searchEngine.findSuitableObject(searchString1);
+//            System.out.println(" Луший результат: " + bestSearchable1.getSearchTerm());
+//        } catch (BestResultNotFound b) {
+//            System.out.println(" Ошибка: " + b.getMessage());
+//        }
+//
+//
+//        String searchString2 = " Шнур ";
+//        try {
+//            Searchable bestSearchable2 = searchEngine.findSuitableObject(searchString2);
+//            System.out.println(" Лучший результат: " + bestSearchable2.getSearchTerm());
+//        } catch (BestResultNotFound i) {
+//            System.out.println(" Ошибка: " + i.getMessage());
+//        }
+
+
+
 
 
