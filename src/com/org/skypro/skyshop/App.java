@@ -73,6 +73,7 @@ public class App {
 
         if (removedFree.isEmpty()) {
             System.out.println(" Список пуст ");
+
         }
 
 
