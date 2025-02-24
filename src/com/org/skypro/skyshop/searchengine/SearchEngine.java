@@ -28,7 +28,7 @@ public class SearchEngine {
         return count;
     }
 
-    public List<Searchable> findAllObjects(String search) {
+    public List<Searchable> findAllObjects(String search) throws BestResultNotFound {
         List<Searchable> objects = new ArrayList<>();
         for (Searchable searchable : searchables) {
             String term = searchable.getSearchTerm();
@@ -37,36 +37,11 @@ public class SearchEngine {
                 objects.add(searchable);
             }
         }
+        if (objects == null) {
+            throw new BestResultNotFound( " Объект не найден для запроса: " + search);
+        }
         return objects;
     }
 }
 
 
-//    public Searchable[] elements;
-//    private int count;
-//
-//    public SearchEngine(int size) {
-//        this.elements = new Searchable[size];
-//        this.count = 0;
-//    }
-
-
-//
-//    public Searchable[] search(String searchTerm) {
-//        Searchable[] results = new Searchable[5];
-//        int resultCount = 0;
-//
-//        for (int i = 0; i < count; i++) {
-//            if (elements[i] != null) {
-//                results[resultCount] = elements[i];
-//                resultCount++;
-//            }
-//            if (resultCount == 5) {
-//                break;
-//            }
-//        }
-//        return results;
-//    }
-//
-//
-//}

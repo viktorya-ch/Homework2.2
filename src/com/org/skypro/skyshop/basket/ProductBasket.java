@@ -46,54 +46,17 @@ public class ProductBasket {
     }
 
 
-//    private Product[] products;
-    // private int count;
-//    private static final int MAX_SIZE = 4;
+    public int getTotalCost() {
+        int totalCost = 0;
+        for (Product product : products) {
+            totalCost += product.getPrice();
+        }
+        return totalCost;
+    }
 
-//
-//    public ProductBasket() {
-//        products = new Product[MAX_SIZE];
-//        count = 0;
-//    }
-
-
-//    public int getTotalCost() {
-//        int totalCost = 0;
-//        for (int i = 0; i < count; i++) {
-//            totalCost += basket.getPrice();
-//        }
-//        return totalCost;
-//    }
-
-//    public void printBasketContents() {
-//        if (count == 0) {
-//            System.out.println(" Корзина пуста. ");
-//        }
-//        for (int i = 0; i < count; i++) {
-//            System.out.println(basket.getTitle() + " : " + basket.getPrice());
-//
-//        }
-//        System.out.println(" Итого: " + getTotalCost());
-//
-//    }
-//
-//    public boolean containsProduct(String productTitle) {
-//        for (int i = 0; i < count; i++) {
-//            if (basket.getTitle().equalsIgnoreCase(productTitle)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-
-//    public void clearBasket() {
-//        for (int i = 0; i < count; i++) {
-//            products = null;
-//        }
-//        count = 0;
-//        System.out.println(" Корзина очищена ");
-//    }
-
+    public void clearBasket() {
+        products.clear();
+    }
 
     public int isSpecialProducts() {
         int specialCount = 0;
