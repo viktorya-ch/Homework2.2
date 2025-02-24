@@ -73,6 +73,7 @@ public class App {
 
         if (removedFree.isEmpty()) {
             System.out.println(" Список пуст ");
+
         }
 
 
@@ -80,6 +81,11 @@ public class App {
 
         System.out.println(" Содержимое корзины: ");
         basket.printBasket();
+
+        //Очистить корзину
+
+        basket.clearBasket();
+        System.out.println(" Корзина очищена ");
 
 
         //Тестирование изменений
@@ -123,7 +129,12 @@ public class App {
 
 
         String searchString = " Кровать ";
-        List<Searchable> results = searchEngine.findAllObjects(searchString);
+        List<Searchable> results = null;
+        try {
+            results = searchEngine.findAllObjects(searchString);
+        } catch (BestResultNotFound e) {
+            throw new RuntimeException(e);
+        }
 
         if (!results.isEmpty()) {
             System.out.println(" Результаты поиска " + searchString);
@@ -137,36 +148,6 @@ public class App {
 }
 
 
-//        searchEngine.add(new Article(" Стол из коллекции Fargo ", " Модель правильной круглой формы легко раскладывается вручную."));
-//        searchEngine.add(new Article(" Монитор Xiaomi Display G24 ", " Обладает разрешением 1920*1080 пикселей. "));
-//        searchEngine.add(new Article(" Кровать односпальная подростковая", " Ортопедическое основание обеспечивает правильное положение тела "));
-//        searchEngine.add(new Article(" Умный электрический чайник СТ-0039 ", " Чайник оснащен панелью управления "));
-//        searchEngine.add(new Article(" Фен для волос ", " Профессиональный стайлер с насадками "));
-
-//
-//        System.out.println(searchEngine.search("Чайник"));
-//        System.out.println(searchEngine.search("Дверь"));
-//        System.out.println(searchEngine.search("Кровать"));
-//        System.out.println(searchEngine.search("Фен"));
-//        System.out.println(searchEngine.search("Монитор"));
-//        System.out.println(searchEngine.search("Стол"));
-//
-//        String searchString1 = " Стол ";
-//        try {
-//            Searchable bestSearchable1 = searchEngine.findSuitableObject(searchString1);
-//            System.out.println(" Луший результат: " + bestSearchable1.getSearchTerm());
-//        } catch (BestResultNotFound b) {
-//            System.out.println(" Ошибка: " + b.getMessage());
-//        }
-//
-//
-//        String searchString2 = " Шнур ";
-//        try {
-//            Searchable bestSearchable2 = searchEngine.findSuitableObject(searchString2);
-//            System.out.println(" Лучший результат: " + bestSearchable2.getSearchTerm());
-//        } catch (BestResultNotFound i) {
-//            System.out.println(" Ошибка: " + i.getMessage());
-//        }
 
 
 
