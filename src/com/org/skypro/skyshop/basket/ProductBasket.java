@@ -2,73 +2,126 @@ package com.org.skypro.skyshop.basket;
 
 import com.org.skypro.skyshop.product.Product;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class ProductBasket {
-    private ArrayList<Product> products;
+    private Map<String, List<Product>> products;
 
     public ProductBasket() {
-        products = new ArrayList<>();
+        products = new HashMap<>();
     }
 
     public void addProduct(Product product) {
-        products.add(product);
+        products.computeIfAbsent(product.getTitle(), k -> new ArrayList<>()).add(product);
     }
 
     public void removeProduct(Product product) {
-        products.remove(product);
+        List<Product> productList = products.get(product.getTitle());
+        if (productList != null) {
+            productList.remove(product);
+            if (productList.isEmpty()) {
+                products.remove(product.getTitle());
+            }
+        }
     }
 
     public List<Product> removeProductsByTitle(String title) {
-        List<Product> removedProduct = new ArrayList<>();
-        Iterator<Product> iterator = products.iterator();
-
-        while (iterator.hasNext()) {
-            Product product = iterator.next();
-            if (product.getTitle().equals(title)) {
-                removedProduct.add(product);
-                iterator.remove();
-            }
+        List<Product> removedProducts = new ArrayList<>();
+        List<Product> productList = products.get(title);
+        if (productList != null) {
+            removedProducts.addAll(productList);
+            productList.clear();
+            products.remove(title);
         }
-        return removedProduct;
+        return removedProducts;
     }
 
     public void printBasket() {
-        for (Product product : products) {
-            System.out.println(product);
+        for (Map.Entry<String, List<Product>> entry : products.entrySet()) {
+            System.out.println(" Название продукта " + entry.getKey());
+            for (Product product : entry.getValue()) {
+                System.out.println(" " + product);
+            }
         }
-    }
-
-    public int getCount() {
-        return products.size();
-    }
-
-
-    public int getTotalCost() {
-        int totalCost = 0;
-        for (Product product : products) {
-            totalCost += product.getPrice();
-        }
-        return totalCost;
     }
 
     public void clearBasket() {
         products.clear();
     }
 
-    public int isSpecialProducts() {
-        int specialCount = 0;
-        for (Product product : products) {
-            if (product.isSpecial()) {
-                specialCount++;
+    public int getTotalCost() {
+        int totalCost = 0;
+        for (List<Product> productList : products.values()) {
+            for (Product product : productList) {
+                totalCost += product.getPrice();
             }
         }
-        return specialCount;
+        return totalCost;
     }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+//    public void removeProduct(Product product) {
+//        products.remove(product);
+//    }
+
+//    public List<Product> removeProductsByTitle(String title) {
+//        List<Product> removedProduct = new ArrayList<>();
+//        Iterator<Product> iterator = products.iterator();
+//
+//        while (iterator.hasNext()) {
+//            Product product = iterator.next();
+//            if (product.getTitle().equals(title)) {
+//                removedProduct.add(product);
+//                iterator.remove();
+//            }
+//        }
+//        return removedProduct;
+//    }
+
+//    public void printBasket() {
+//        for (Product product : products) {
+//            System.out.println(product);
+//        }
+//    }
+
+//    public int getCount() {
+//        return products.size();
+//    }
+
+//
+//    public int getTotalCost() {
+//        int totalCost = 0;
+//        for (Product product : products) {
+//            totalCost += product.getPrice();
+//        }
+//        return totalCost;
+//    }
+
+//    public void clearBasket() {
+//        products.clear();
+//    }
+
+//    public int isSpecialProducts() {
+//        int specialCount = 0;
+//        for (Product product : products) {
+//            if (product.isSpecial()) {
+//                specialCount++;
+//            }
+//        }
+//        return specialCount;
+//    }
+
+
 
 
 
