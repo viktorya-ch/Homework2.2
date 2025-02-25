@@ -12,6 +12,7 @@ import com.org.skypro.skyshop.searchengine.SearchEngine;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 
 public class App {
@@ -141,8 +142,15 @@ public class App {
             for (Searchable result : results) {
                 System.out.println(result.getSearchTerm());
             }
-        } else {
-            System.out.println(" Нет совпадений для поисковой строки : " + searchString);
+        }
+
+
+
+        String inquiry = " Монитор обладает ";
+        Map<String,Searchable>result=searchEngine.search(inquiry);
+        System.out.println(" По запросу: " + inquiry + " нашлость - ");
+        for (Map.Entry<String,Searchable> entry : result.entrySet()){
+            System.out.println(entry.getValue());
         }
     }
 }

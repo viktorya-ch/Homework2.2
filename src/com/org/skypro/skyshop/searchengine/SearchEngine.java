@@ -3,9 +3,7 @@ package com.org.skypro.skyshop.searchengine;
 import com.org.skypro.skyshop.article.Article;
 import com.org.skypro.skyshop.searchable.Searchable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class SearchEngine {
     private List<Searchable> searchables;
@@ -16,6 +14,16 @@ public class SearchEngine {
 
     public void addSearchable(Searchable searchable) {
         searchables.add(searchable);
+    }
+
+    public Map<String,Searchable> search(String inquiry){
+        Map<String,Searchable> resultMap = new TreeMap<>();
+        for (Searchable searchable:searchables){
+            if (searchable.getName().toLowerCase().contains(inquiry.toLowerCase())){
+                resultMap.put(searchable.getName(),searchable);
+            }
+        }
+        return resultMap;
     }
 
     private int countOccurrences(String str, String substring) {
