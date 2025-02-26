@@ -145,11 +145,10 @@ public class App {
         }
 
 
-
         String inquiry = " Монитор обладает ";
-        Map<String,Searchable>result=searchEngine.search(inquiry);
+        Map<String, Searchable> result = searchEngine.search(inquiry);
         System.out.println(" По запросу: " + inquiry + " нашлость - ");
-        for (Map.Entry<String,Searchable> entry : result.entrySet()){
+        for (Map.Entry<String, Searchable> entry : result.entrySet()) {
             System.out.println(entry.getValue());
         }
     }

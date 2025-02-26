@@ -58,6 +58,11 @@ public class ProductBasket {
         }
         return totalCost;
     }
+    public boolean isSpecialProducts() {
+        return false;
+    }
+
+
 }
 
 
@@ -111,15 +116,6 @@ public class ProductBasket {
 //        products.clear();
 //    }
 
-//    public int isSpecialProducts() {
-//        int specialCount = 0;
-//        for (Product product : products) {
-//            if (product.isSpecial()) {
-//                specialCount++;
-//            }
-//        }
-//        return specialCount;
-//    }
 
 
 

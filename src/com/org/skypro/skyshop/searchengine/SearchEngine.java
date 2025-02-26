@@ -17,7 +17,12 @@ public class SearchEngine {
     }
 
     public Map<String,Searchable> search(String inquiry){
-        Map<String,Searchable> resultMap = new TreeMap<>();
+        Map<String,Searchable> resultMap = new TreeMap<>(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return 0;
+            }
+        });
         for (Searchable searchable:searchables){
             if (searchable.getName().toLowerCase().contains(inquiry.toLowerCase())){
                 resultMap.put(searchable.getName(),searchable);
