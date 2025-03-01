@@ -6,11 +6,11 @@ public class FixPriceProduct extends Product {
     private static final double FIXED_PRICE = 399;
     private double price;
 
-    public FixPriceProduct (String title, double price){
+    public FixPriceProduct(String title, double price) {
         super(title);
     }
 
-    public double getPrice(){
+    public double getPrice() {
         return FIXED_PRICE;
     }
 
@@ -28,7 +28,7 @@ public class FixPriceProduct extends Product {
         return Objects.hash(super.hashCode(), price);
     }
 
-    public String toString(){
+    public String toString() {
         return " " + title + " : " + " Фиксированная цена " + FIXED_PRICE;
     }
 
