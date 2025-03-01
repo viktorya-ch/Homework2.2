@@ -1,7 +1,7 @@
 package com.org.skypro.skyshop.searchengine;
 
-import com.org.skypro.skyshop.article.Article;
 import com.org.skypro.skyshop.searchable.Searchable;
+import com.org.skypro.skyshop.searchable.SearchableComparator;
 
 import java.util.*;
 
@@ -17,19 +17,27 @@ public class SearchEngine {
     }
 
     public Map<String,Searchable> search(String inquiry){
-        Map<String,Searchable> resultMap = new TreeMap<>(new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return 0;
-            }
-        });
-        for (Searchable searchable:searchables){
-            if (searchable.getName().toLowerCase().contains(inquiry.toLowerCase())){
-                resultMap.put(searchable.getName(),searchable);
+        Map<String,Searchable> resultMap = new TreeMap<>(String::compareTo);
+        for (Searchable searchable : searchables) {
+            if (searchable.getName().toLowerCase().contains(inquiry.toLowerCase())) {
+                resultMap.put(searchable.getName(), searchable);
             }
         }
         return resultMap;
-    }
+
+        }
+//
+//            public int compare(String o1, String o2) {
+//                return search(String inquiry);
+//            }
+//        });
+//        for (Searchable searchable:searchables){
+//            if (searchable.getName().toLowerCase().contains(inquiry.toLowerCase())){
+//                resultMap.put(searchable.getName(),searchable);
+//            }
+//        }
+//        return resultMap;
+
 
     private int countOccurrences(String str, String substring) {
         int count = 0;
