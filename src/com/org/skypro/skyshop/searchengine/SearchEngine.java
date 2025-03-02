@@ -19,7 +19,7 @@ public class SearchEngine {
     }
 
 
-    public TreeSet<Searchable> search(String inquiry){
+    public TreeSet<Searchable> search(String inquiry) {
         TreeSet<Searchable> resultSet = new TreeSet<>(new SearchableComparator());
         for (Searchable searchable : searchables) {
             if (searchable.getName().toLowerCase().contains(inquiry.toLowerCase())) {
@@ -28,7 +28,7 @@ public class SearchEngine {
         }
         return resultSet;
 
-        }
+    }
 
 
     private int countOccurrences(String str, String substring) {
@@ -51,7 +51,7 @@ public class SearchEngine {
             }
         }
         if (objects == null) {
-            throw new BestResultNotFound( " Объект не найден для запроса: " + search);
+            throw new BestResultNotFound(" Объект не найден для запроса: " + search);
         }
         return objects;
     }

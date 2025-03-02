@@ -59,14 +59,14 @@ public class ProductBasket {
         return totalCost;
     }
 
-    public int isSpecialProducts(){
+    public int isSpecialProducts() {
         int count = 0;
-        for (List <Product> product : products.values()){
-            if (product.isEmpty()){
+        for (List<Product> product : products.values()) {
+            if (product.isEmpty()) {
                 count++;
             }
         }
-       return count;
+        return count;
     }
 
 }

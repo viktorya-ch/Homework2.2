@@ -142,7 +142,6 @@ public class App {
         }
 
 
-
         searchEngine.addSearchable(new Product(" Книга ") {
             @Override
             public double getPrice() {
@@ -171,21 +170,8 @@ public class App {
         searchEngine.addSearchable(new Article(" Фен ", " Фен для укладки волос "));
 
 
-    }}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
+}
 
 
 //        TreeSet<Article> results = articleSearch.search (" Фен ");
