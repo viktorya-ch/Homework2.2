@@ -58,10 +58,16 @@ public class ProductBasket {
         }
         return totalCost;
     }
-    public boolean isSpecialProducts() {
-        return false;
-    }
 
+    public int isSpecialProducts() {
+        int count = 0;
+        for (List<Product> product : products.values()) {
+            if (product.isEmpty()) {
+                count++;
+            }
+        }
+        return count;
+    }
 
 }
 
@@ -74,47 +80,6 @@ public class ProductBasket {
 
 
 
-
-//    public void removeProduct(Product product) {
-//        products.remove(product);
-//    }
-
-//    public List<Product> removeProductsByTitle(String title) {
-//        List<Product> removedProduct = new ArrayList<>();
-//        Iterator<Product> iterator = products.iterator();
-//
-//        while (iterator.hasNext()) {
-//            Product product = iterator.next();
-//            if (product.getTitle().equals(title)) {
-//                removedProduct.add(product);
-//                iterator.remove();
-//            }
-//        }
-//        return removedProduct;
-//    }
-
-//    public void printBasket() {
-//        for (Product product : products) {
-//            System.out.println(product);
-//        }
-//    }
-
-//    public int getCount() {
-//        return products.size();
-//    }
-
-//
-//    public int getTotalCost() {
-//        int totalCost = 0;
-//        for (Product product : products) {
-//            totalCost += product.getPrice();
-//        }
-//        return totalCost;
-//    }
-
-//    public void clearBasket() {
-//        products.clear();
-//    }
 
 
 

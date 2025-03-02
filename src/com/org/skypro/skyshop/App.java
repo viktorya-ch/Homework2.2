@@ -10,9 +10,7 @@ import com.org.skypro.skyshop.searchable.Searchable;
 import com.org.skypro.skyshop.searchengine.BestResultNotFound;
 import com.org.skypro.skyshop.searchengine.SearchEngine;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class App {
@@ -88,7 +86,6 @@ public class App {
         basket.clearBasket();
         System.out.println(" Корзина очищена ");
 
-
         //Тестирование изменений
 
         SearchEngine searchEngine = new SearchEngine();
@@ -130,29 +127,59 @@ public class App {
 
 
         String searchString = " Кровать ";
-        List<Searchable> results = null;
+        List<Searchable> result = null;
         try {
-            results = searchEngine.findAllObjects(searchString);
+            result = searchEngine.findAllObjects(searchString);
         } catch (BestResultNotFound e) {
             throw new RuntimeException(e);
         }
 
-        if (!results.isEmpty()) {
+        if (!result.isEmpty()) {
             System.out.println(" Результаты поиска " + searchString);
-            for (Searchable result : results) {
-                System.out.println(result.getSearchTerm());
+            for (Searchable results : result) {
+                System.out.println(results.getSearchTerm());
             }
         }
 
 
-        String inquiry = " Монитор обладает ";
-        Map<String, Searchable> result = searchEngine.search(inquiry);
-        System.out.println(" По запросу: " + inquiry + " нашлость - ");
-        for (Map.Entry<String, Searchable> entry : result.entrySet()) {
-            System.out.println(entry.getValue());
-        }
+        searchEngine.addSearchable(new Product(" Книга ") {
+            @Override
+            public double getPrice() {
+                return 0;
+            }
+
+            @Override
+            public boolean isSpecial() {
+                return false;
+            }
+        });
+        searchEngine.addSearchable(new Product(" Заколка ") {
+            @Override
+            public double getPrice() {
+                return 0;
+            }
+
+            @Override
+            public boolean isSpecial() {
+                return false;
+            }
+        });
+
+        searchEngine.addSearchable(new Article(" Фен ", " Фен мощностью 3000 ВТ"));
+        searchEngine.addSearchable(new Article(" Сумка ", " Сумка женская коричневого цвета "));
+        searchEngine.addSearchable(new Article(" Фен ", " Фен для укладки волос "));
+
+
     }
 }
+
+
+//        TreeSet<Article> results = articleSearch.search (" Фен ");
+//        for (Article article : results){
+//            System.out.println(article.getTitleArticle());
+//        }
+
+
 
 
 
