@@ -6,38 +6,26 @@ import com.org.skypro.skyshop.searchable.SearchableComparator;
 import java.util.*;
 
 public class SearchEngine {
-    private List<Searchable> searchables;
+    private TreeSet<Searchable> searchables;
 
     public SearchEngine() {
-        searchables = new ArrayList<>();
+        searchables = new TreeSet<>(new SearchableComparator());
     }
 
     public void addSearchable(Searchable searchable) {
         searchables.add(searchable);
     }
 
-    public Map<String,Searchable> search(String inquiry){
-        Map<String,Searchable> resultMap = new TreeMap<>(String::compareTo);
+    public TreeSet<Searchable> search(String inquiry){
+        TreeSet<Searchable> resultSet = new TreeSet<>(new SearchableComparator());
         for (Searchable searchable : searchables) {
             if (searchable.getName().toLowerCase().contains(inquiry.toLowerCase())) {
-                resultMap.put(searchable.getName(), searchable);
+                resultSet.add(searchable);
             }
         }
-        return resultMap;
+        return resultSet;
 
         }
-//
-//            public int compare(String o1, String o2) {
-//                return search(String inquiry);
-//            }
-//        });
-//        for (Searchable searchable:searchables){
-//            if (searchable.getName().toLowerCase().contains(inquiry.toLowerCase())){
-//                resultMap.put(searchable.getName(),searchable);
-//            }
-//        }
-//        return resultMap;
-
 
     private int countOccurrences(String str, String substring) {
         int count = 0;
@@ -49,8 +37,8 @@ public class SearchEngine {
         return count;
     }
 
-    public List<Searchable> findAllObjects(String search) throws BestResultNotFound {
-        List<Searchable> objects = new ArrayList<>();
+    public HashSet<Searchable> findAllObjects(String search) throws BestResultNotFound {
+        HashSet<Searchable> objects = new HashSet<>();
         for (Searchable searchable : searchables) {
             String term = searchable.getSearchTerm();
             int count = countOccurrences(term, search);
