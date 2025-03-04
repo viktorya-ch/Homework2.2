@@ -128,7 +128,7 @@ public class App {
 
 
         String searchString = " Кровать ";
-       HashSet<Searchable> results = null;
+        HashSet<Searchable> results = null;
         try {
             results = searchEngine.findAllObjects(searchString);
         } catch (BestResultNotFound e) {
@@ -142,8 +142,8 @@ public class App {
             }
         }
 
-        TreeSet<Searchable>result = searchEngine.search(" Монитор ");
-        for (Searchable searchable : result){
+        TreeSet<Searchable> result = searchEngine.search(" Монитор ");
+        for (Searchable searchable : result) {
             System.out.println(searchable.getName());
         }
 
