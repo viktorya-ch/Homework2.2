@@ -1,40 +1,56 @@
 package com.org.skypro.skyshop.searchengine;
 
 import com.org.skypro.skyshop.searchable.Searchable;
+import com.org.skypro.skyshop.searchable.SearchableComparator;
+
+import java.util.*;
 
 public class SearchEngine {
-    private Searchable[] elements;
-    private int count;
+    private TreeSet<Searchable> searchables;
 
-
-    public SearchEngine (int size) {
-        this.elements = new Searchable[size];
-        this.count = 0;
+    public SearchEngine() {
+        searchables = new TreeSet<>(new SearchableComparator());
     }
 
-    public void add ( Searchable type) {
-        if (count < elements.length){
-            elements[count] = type;
+    public void addSearchable(Searchable searchable) {
+        searchables.add(searchable);
+    }
+
+    public TreeSet<Searchable> search(String inquiry) {
+        TreeSet<Searchable> resultSet = new TreeSet<>(new SearchableComparator());
+        for (Searchable searchable : searchables) {
+            if (searchable.getName().toLowerCase().contains(inquiry.toLowerCase())) {
+                resultSet.add(searchable);
+            }
+        }
+        return resultSet;
+
+    }
+
+    private int countOccurrences(String str, String substring) {
+        int count = 0;
+        int index = 0;
+        while ((index = str.indexOf(substring, index)) != -1) {
             count++;
-        }else {
-            System.out.println(" Массив полный. Невозможно добавить новый элемент. ");
+            index += substring.length();
         }
+        return count;
     }
 
-    public Searchable[] search ( String searchTerm) {
-        Searchable[] results = new Searchable[5];
-        int resultCount = 0;
-
-        for (int i = 0; i < count; i++){
-            if (elements[i] != null){
-                results[resultCount] = elements[i];
-                resultCount++;
-            }
-            if (resultCount == 5) {
-                break;
+    public HashSet<Searchable> findAllObjects(String search) throws BestResultNotFound {
+        HashSet<Searchable> objects = new HashSet<>();
+        for (Searchable searchable : searchables) {
+            String term = searchable.getSearchTerm();
+            int count = countOccurrences(term, search);
+            if (count > 0) {
+                objects.add(searchable);
             }
         }
-        return results;
+        if (objects == null) {
+            throw new BestResultNotFound(" Объект не найден для запроса: " + search);
+        }
+        return objects;
     }
-
 }
+
+
