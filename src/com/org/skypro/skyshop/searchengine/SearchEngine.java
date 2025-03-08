@@ -4,39 +4,24 @@ import com.org.skypro.skyshop.searchable.Searchable;
 import com.org.skypro.skyshop.searchable.SearchableComparator;
 
 import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class SearchEngine {
-    private List<Searchable> searchables;
+    private TreeSet<Searchable> searchables;
 
     public SearchEngine() {
-        searchables = new ArrayList<>();
+        searchables = new TreeSet<>(new SearchableComparator());
     }
 
     public void addSearchable(Searchable searchable) {
         searchables.add(searchable);
     }
 
-    public Map<String,Searchable> search(String inquiry){
-        Map<String,Searchable> resultMap = new TreeMap<>(String::compareTo);
-        for (Searchable searchable : searchables) {
-            if (searchable.getName().toLowerCase().contains(inquiry.toLowerCase())) {
-                resultMap.put(searchable.getName(), searchable);
-            }
-        }
-        return resultMap;
-
-        }
-//
-//            public int compare(String o1, String o2) {
-//                return search(String inquiry);
-//            }
-//        });
-//        for (Searchable searchable:searchables){
-//            if (searchable.getName().toLowerCase().contains(inquiry.toLowerCase())){
-//                resultMap.put(searchable.getName(),searchable);
-//            }
-//        }
-//        return resultMap;
+    public TreeSet<Searchable> search(String inquiry) {
+        Supplier<TreeSet<Searchable>> treeSetSupplier = () -> new TreeSet<>(new SearchableComparator());
+        return searchables.stream().filter(searchable -> searchable.getName().toLowerCase().contains(inquiry.toLowerCase())).collect(Collectors.toCollection(treeSetSupplier));
+    }
 
 
     private int countOccurrences(String str, String substring) {
@@ -49,20 +34,15 @@ public class SearchEngine {
         return count;
     }
 
-    public List<Searchable> findAllObjects(String search) throws BestResultNotFound {
-        List<Searchable> objects = new ArrayList<>();
-        for (Searchable searchable : searchables) {
-            String term = searchable.getSearchTerm();
-            int count = countOccurrences(term, search);
-            if (count > 0) {
-                objects.add(searchable);
-            }
-        }
-        if (objects == null) {
-            throw new BestResultNotFound( " Объект не найден для запроса: " + search);
+    public HashSet<Searchable> findAllObjects(String search) throws BestResultNotFound {
+        HashSet<Searchable> objects = searchables.stream().filter(searchable -> countOccurrences(searchable.getSearchTerm(), search) > 0).collect(Collectors.toCollection(HashSet::new));
+        if (objects.isEmpty()) {
+            throw new BestResultNotFound(" Объект для запроса " + search + " не найден");
         }
         return objects;
     }
+
 }
+
 
 

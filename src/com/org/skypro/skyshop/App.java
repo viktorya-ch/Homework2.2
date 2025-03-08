@@ -10,9 +10,7 @@ import com.org.skypro.skyshop.searchable.Searchable;
 import com.org.skypro.skyshop.searchengine.BestResultNotFound;
 import com.org.skypro.skyshop.searchengine.SearchEngine;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class App {
@@ -130,7 +128,7 @@ public class App {
 
 
         String searchString = " Кровать ";
-        List<Searchable> results = null;
+        HashSet<Searchable> results = null;
         try {
             results = searchEngine.findAllObjects(searchString);
         } catch (BestResultNotFound e) {
@@ -144,13 +142,11 @@ public class App {
             }
         }
 
-
-        String inquiry = " Монитор обладает ";
-        Map<String, Searchable> result = searchEngine.search(inquiry);
-        System.out.println(" По запросу: " + inquiry + " нашлость - ");
-        for (Map.Entry<String, Searchable> entry : result.entrySet()) {
-            System.out.println(entry.getValue());
+        TreeSet<Searchable> result = searchEngine.search(" Монитор ");
+        for (Searchable searchable : result) {
+            System.out.println(searchable.getName());
         }
+
     }
 }
 
