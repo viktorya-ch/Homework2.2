@@ -37,26 +37,18 @@ public class ProductBasket {
     }
 
     public void printBasket() {
-        for (Map.Entry<String, List<Product>> entry : products.entrySet()) {
-            System.out.println(" Название продукта " + entry.getKey());
-            for (Product product : entry.getValue()) {
-                System.out.println(" " + product);
-            }
-        }
+        products.forEach((title,productList) -> {
+            System.out.println(" Название: " + title);
+            productList.forEach(System.out::println);
+        });
     }
 
     public void clearBasket() {
         products.clear();
     }
 
-    public int getTotalCost() {
-        int totalCost = 0;
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                totalCost += product.getPrice();
-            }
-        }
-        return totalCost;
+    public double getTotalCost() {
+        return products.values().stream().flatMap(List :: stream).mapToDouble(Product::getPrice).sum();
     }
 
     public int isSpecialProducts() {

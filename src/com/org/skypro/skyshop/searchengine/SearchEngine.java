@@ -4,6 +4,8 @@ import com.org.skypro.skyshop.searchable.Searchable;
 import com.org.skypro.skyshop.searchable.SearchableComparator;
 
 import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class SearchEngine {
     private TreeSet<Searchable> searchables;
@@ -17,15 +19,10 @@ public class SearchEngine {
     }
 
     public TreeSet<Searchable> search(String inquiry) {
-        TreeSet<Searchable> resultSet = new TreeSet<>(new SearchableComparator());
-        for (Searchable searchable : searchables) {
-            if (searchable.getName().toLowerCase().contains(inquiry.toLowerCase())) {
-                resultSet.add(searchable);
-            }
-        }
-        return resultSet;
-
+        Supplier<TreeSet<Searchable>> treeSetSupplier = () -> new TreeSet<>(new SearchableComparator());
+        return searchables.stream().filter(searchable -> searchable.getName().toLowerCase().contains(inquiry.toLowerCase())).collect(Collectors.toCollection(treeSetSupplier));
     }
+
 
     private int countOccurrences(String str, String substring) {
         int count = 0;
@@ -38,19 +35,14 @@ public class SearchEngine {
     }
 
     public HashSet<Searchable> findAllObjects(String search) throws BestResultNotFound {
-        HashSet<Searchable> objects = new HashSet<>();
-        for (Searchable searchable : searchables) {
-            String term = searchable.getSearchTerm();
-            int count = countOccurrences(term, search);
-            if (count > 0) {
-                objects.add(searchable);
-            }
-        }
-        if (objects == null) {
-            throw new BestResultNotFound(" Объект не найден для запроса: " + search);
+        HashSet<Searchable> objects = searchables.stream().filter(searchable -> countOccurrences(searchable.getSearchTerm(), search) > 0).collect(Collectors.toCollection(HashSet::new));
+        if (objects.isEmpty()) {
+            throw new BestResultNotFound(" Объект для запроса " + search + " не найден");
         }
         return objects;
     }
+
 }
+
 
 
