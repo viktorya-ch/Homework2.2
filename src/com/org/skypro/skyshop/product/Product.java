@@ -1,6 +1,7 @@
 package com.org.skypro.skyshop.product;
 
-import com.org.skypro.skyshop.Searchable;
+import com.org.skypro.skyshop.searchable.Searchable;
+import com.org.skypro.skyshop.searchengine.BestResultNotFound;
 
 import java.util.Objects;
 
@@ -9,8 +10,10 @@ public abstract class Product implements Searchable {
 
 
     public Product(String title) {
+        if (title == null || title.isBlank()) {
+            throw new IllegalArgumentException(" Неправильное имя для продукта ");
+        }
         this.title = title;
-
     }
 
     public String getTitle() {
@@ -18,8 +21,6 @@ public abstract class Product implements Searchable {
     }
 
     public abstract double getPrice();
-
-
 
 
     public void setTitle(String title) {
@@ -49,21 +50,19 @@ public abstract class Product implements Searchable {
 
 
     @Override
-    public String getSearchTerm(){
+    public String getSearchTerm() {
         return title;
     }
 
     @Override
-    public String getContentType(){
+    public String getContentType() {
         return " PRODUCT ";
     }
 
     @Override
-    public String getName(){
+    public String getName() {
         return title;
     }
-
-
 
 
 }
